@@ -14,8 +14,6 @@ jobs:
 
       - name: Setup pnpm Package Manager
         uses: pnpm/action-setup@v4
-        with:
-          version: 10.33.0
 
       - name: Setup Node.js Environment with pnpm cache
         uses: actions/setup-node@v4
@@ -43,10 +41,8 @@ jobs:
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
           ACCESS_CODE: ${{ secrets.ACCESS_CODE }}
           KEY_VAULTS_SECRET: ${{ secrets.KEY_VAULTS_SECRET }}
-          # 1. We force the primary service toggle to false to disable server mode logic completely
           NEXT_PUBLIC_SERVICE_MODE: "false"
           NEXT_PUBLIC_ENABLED_SERVER_SERVICE: "false"
-          # 2. We explicitly turn off user authorization loops that mandate database storage
           NEXT_PUBLIC_ENABLE_OAUTH_LOGINS: "false"
           NEXT_PUBLIC_ENABLE_NEXT_AUTH: "false"
 
