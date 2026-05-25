@@ -44,11 +44,9 @@ jobs:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
           ACCESS_CODE: ${{ secrets.ACCESS_CODE }}
-          # 1. We put this back so the encryption engine is satisfied
-          KEY_VAULTS_SECRET: ${{ secrets.KEY_VAULTS_SECRET }}
-          # 2. We give it a fake local file link so it stops looking for PostgreSQL cloud servers
-          DATABASE_URL: file:./dev.db
-          DATABASE_DRIVER: sqlite
-          # 3. We turn off all authentication scans that crash the build
+          # 1. We force the primary service toggle to false to disable server mode logic completely
+          NEXT_PUBLIC_SERVICE_MODE: "false"
+          NEXT_PUBLIC_ENABLED_SERVER_SERVICE: "false"
+          # 2. We explicitly turn off user authorization loops that mandate database storage
           NEXT_PUBLIC_ENABLE_OAUTH_LOGINS: "false"
           NEXT_PUBLIC_ENABLE_NEXT_AUTH: "false"
