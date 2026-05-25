@@ -13,12 +13,15 @@ jobs:
 
       - name: Setup pnpm Package Manager
         uses: pnpm/action-setup@v4
+        with:
+          # This line forces pnpm to use the standard package.json configuration 
+          # instead of tracking a non-existent or nested lockfile structure
+          package_json_file: 'package.json'
 
       - name: Setup Node.js Environment
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'pnpm'
 
       - name: Install System Dependencies
         run: pnpm install --no-frozen-lockfile
