@@ -44,8 +44,9 @@ jobs:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
           ACCESS_CODE: ${{ secrets.ACCESS_CODE }}
-          # This line explicitly passes your secret down to the compiler tool
           KEY_VAULTS_SECRET: ${{ secrets.KEY_VAULTS_SECRET }}
+          # This line forces the system to run locally without demanding a Postgres database
+          NEXT_PUBLIC_SERVICE_MODE: client
 
       - name: Upload Finished Prebuilt Package to Vercel
         run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
