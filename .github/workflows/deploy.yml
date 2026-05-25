@@ -47,6 +47,7 @@ jobs:
           KEY_VAULTS_SECRET: ${{ secrets.KEY_VAULTS_SECRET }} 
           # 1. We remove KEY_VAULTS_SECRET so the build stops expecting a database
           # 2. We add this line to force LobeChat to use an offline browser-based DB
+          DATABASE_URL: file:./local.db
           NEXT_PUBLIC_CLIENT_DB: pglite
           
       - name: Upload Finished Prebuilt Package to Vercel
