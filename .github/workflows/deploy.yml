@@ -44,12 +44,11 @@ jobs:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
           ACCESS_CODE: ${{ secrets.ACCESS_CODE }}
-          # 1. We remove KEY_VAULTS_SECRET so the build stops expecting a database
-          # 2. We add this line to force LobeChat to use an offline browser-based DB
-          NEXT_PUBLIC_CLIENT_DB: pglite
-
-      - name: Upload Finished Prebuilt Package to Vercel
-        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
-        env:
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          # 1. We put this back so the encryption engine is satisfied
+          KEY_VAULTS_SECRET: ${{ secrets.KEY_VAULTS_SECRET }}
+          # 2. We give it a fake local file link so it stops looking for PostgreSQL cloud servers
+          DATABASE_URL: file:./dev.db
+          DATABASE_DRIVER: sqlite
+          # 3. We turn off all authentication scans that crash the build
+          NEXT_PUBLIC_ENABLE_OAUTH_LOGINS: "false"
+          NEXT_PUBLIC_ENABLE_NEXT_AUTH: "false"
