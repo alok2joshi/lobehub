@@ -8,12 +8,12 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Stable v1 Client-Only Branch
+      - name: Checkout Stable Legacy Client-Only Branch
         uses: actions/checkout@v4
         with:
-          # This forces GitHub to pull the legacy codebase that doesn't require databases
+          # We pull from the dedicated legacy branch that supports 100% offline client mode
           repository: 'lobehub/lobe-chat'
-          ref: 'v1'
+          ref: 'legacy'
 
       - name: Setup pnpm Package Manager
         uses: pnpm/action-setup@v4
@@ -48,7 +48,7 @@ jobs:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
           ACCESS_CODE: ${{ secrets.ACCESS_CODE }}
-          # This forces the legacy system into local client cache mode seamlessly
+          # This configures the legacy code to successfully run without external database checks
           NEXT_PUBLIC_SERVICE_MODE: client
 
       - name: Upload Finished Prebuilt Package to Vercel
